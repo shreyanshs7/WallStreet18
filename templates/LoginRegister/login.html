@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One|Oswald" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Arsenal" rel="stylesheet">
+    <title>Register</title>
+    <script src="/static/js/validation.js"></script>
+  <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/login.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    </head>
+    <body style="font-family: 'Raleway', sans-serif;">
+		<script>
+			function login() {
+				var username = $("#username").val();
+				var password = $("#password").val();
+				var data = {
+					"username" : username,
+					"password" : password
+				}
+				$.ajax({
+					type : "POST",
+					url : "/auth/login/",
+					data : data,
+					success : function(data) {
+						console.log(data);
+						if(data.success == true) {
+							window.location.href = '/sellbuy/dashboard/';
+						}
+					},
+					error : function() {
+						console.log("ERROR OCCURED");
+					}
+				});
+			}	
+		</script>
+      <div class="card mx-auto container">
+      <div class="display-4 text-center mt-5 mb-3"> Wallstreet'18 </div>
+      <br>
+      <p class="text-center"> Sign-in to start your session </p>
+          <div class="form-group mr-2 ml-2 mt-2">
+          <!--<label for="Email">Email address</label>-->
+          <div class="input-group">
+				<span class="input-group-addon">
+					<i class="fa fa-user mr-1 mb-0"></i>
+				</span>
+          <input type="text" class="form-control" id="username" placeholder="Username" required>
+          
+        </div>
+         </div>
+
+         <div class="form-group mr-2 ml-2 mt-4">
+         <!--<label for="password">Password</label>-->
+         <div class="input-group">
+				<span class="input-group-addon">
+					<i class="fa fa-lock mr-1 mb-0"></i>
+				</span>
+         <input type="password" class="form-control has-feedback" id="password" placeholder="Enter password"  required>
+         </div>
+         </div>
+
+         <br>
+
+
+         <button class="btn btn-primary btn-sm text-center" id="login" onclick="login()">SIGN IN </button>
+          <br>
+         <div class="text-center" id="signup"> Don't have an account? <a href="/auth/register/"> Sign up </a></div>
+<br>
+<br>
+</body>
+</html>

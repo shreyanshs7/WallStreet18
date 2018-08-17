@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% load static %}
+	<title>WallStreet '17</title>
+	<link type="text/css" rel="stylesheet" href="/static/css/materialize.min.css"  media="screen,projection"/>
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+	
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="icon" href="/static/images/wallstreet-logo.png">
+	<script src="/static/js/jquery-3.2.1.js"></script>
+</head>
+<body onload="LoadPrice()" class="teal darken-3" >
+<script src="/static/js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="/static/js/materialize.min.js"></script>
+ <script language="javascript" type="text/javascript">
+
+  $(document).ready(function() {
+    $('select').material_select();
+    $(".button-collapse").sideNav();
+  });
+
+function popitup(url) {
+    var leftPosition, topPosition;
+    
+    leftPosition = (window.screen.width / 2) - ((800 / 2) + 10);
+    
+    topPosition = (window.screen.height / 2) - ((600 / 2) + 50);
+
+  newwindow=window.open(url,'name',"status=no,height=600,width=800,resizable=yes,left="
+    + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY="
+    + topPosition + ",toolbar=no,menubar=no,scrollbars=no,directories=no");
+
+  if (window.focus) {newwindow.focus()}
+  return false;
+}
+
+
+</script>
+
+  <nav>
+    <div class="nav-wrapper teal darken-3 ">
+
+      <span class="brand-logo lime-text" style="margin-left: 40px; font-family: 'Raleway', sans-serif;"><b>WallStreet '17</b></span>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+     
+
+      <ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 70px;"
+      </ul>
+    </div>
+  </nav>
+<br>
+
+<div  style="width: 1200px; margin-left: 70px;">
+<div class="card">
+<div class="card-content">
+	 <div class="row">
+	 	<div class="col s4">
+	 		<h5 class="" style="margin-left: 68px;">Welcome <b class="blue-text text-darken-3	">{{ request.user }}</b></h5>
+	 		
+	 		<br><br>
+	 		<h6 class="" style=" font-size: 30px; margin-left: 40px;"><b>Money - </b><span id="ch" class="green-text"></span></h6>
+	 		<br>
+	 		
+	 		<br><br>
+	 		
+	<form >
+		<span style="margin-left: 55px; "><b>Share :</b></span>
+			{% csrf_token %}
+			<div class="container"><select name="dropdown" id="dropdown">
+
+			</select>
+			<br>
+			<span ><b>Quantity :</b></span>
+				<input type="number" name="quantity" id="quantity" placeholder="0">
+			<br><br>
+			<div class="center"><button class="btn waves-effect waves-light  light-green accent-4 black-text" type="submit" name="buy" id="buy" value="BUY"  ><b>BUY</b></button>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button class="btn waves-effect waves-light red accent-4 black-text"  type="submit" name="sell" id="sell" value="SELL"><b>SELL</b></button></div>
+			</div>
+			
+
+	</form>
+	
+	
+
+	 	</div>
+	 	<div class="col s8">
+	 		<div class="row">
+	   <div class="col s4">
+		<table class="centered" >
+			<thead class="center">
+				<th>Share Name</th>
+			</thead>
+			
+	
+		</table>
+
+      </div>
+      <div class="col s4">
+      	<table>
+      		<thead>
+      			<th class="center">Share Price</th>
+      		</thead>
+      		<tbody id="cp">
+      		
+      		</tbody>
+      	</table>
+      	
+      	
+      </div>
+      <div class="col s4">
+      	<table >
+      		<thead>
+      			<th class="center">Quantity</th>
+      		</thead>
+      		<tbody id="cq" >
+      		
+      		</tbody>
+      	</table>
+      	
+      </div>
+  </div>
+  	<button class="btn waves-effect waves-light blue-grey black-text " style="margin-left: 290px;" onclick="LoadPrice()" ><b>Refresh Price</b></button>
+	 	</div>
+	 </div>
+  
+  
+</div>
+
+
+</div>
+</div>	
+
+
+
+
+
+	<script>
+
+	setInterval(function(){
+		LoadPrice();
+	},10000);
+
+		function LoadPrice(){
+			
+			$.get('/sellbuy/data/',function(data){
+                console.log(data);
+				// $("#cp").html(data);
+
+			});
+		}
+
+		function CurrentHolding(){
+			$.get('/currentholding',function(data){
+				$("#ch").html(data);
+			});
+		}
+
+
+		$("#buy").click(function(e){
+			
+			e.preventDefault();
+
+			var dropdown = $("#dropdown").val();
+			var quantity = $("#quantity").val();
+			var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+			var button = $(this).val();
+
+			$.ajax({
+				type : 'POST' ,
+				url : '/sellbuy/' ,
+				data :{
+					dropdown : dropdown ,
+					quantity : quantity ,
+					button : button ,
+					csrfmiddlewaretoken : csrfmiddlewaretoken 
+
+				},
+				success : function(data1){
+					LoadQuantity();
+					CurrentHolding();
+
+
+					
+					Materialize.toast(data1, 4000 ,'rounded');
+					
+				}
+			});
+
+		});
+
+		$("#sell").click(function(e){
+			
+			e.preventDefault();
+
+			var dropdown = $("#dropdown").val();
+			var quantity = $("#quantity").val();
+			var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+			var button = $(this).val();
+
+			$.ajax({
+				type : 'POST' ,
+				url : '/sellbuy/' ,
+				data :{
+					dropdown : dropdown ,
+					quantity : quantity ,
+					button : button ,
+					csrfmiddlewaretoken : csrfmiddlewaretoken 
+
+				},
+				success : function(data1){
+					LoadQuantity();
+					CurrentHolding();
+					
+					Materialize.toast(data1, 4000 ,'rounded');
+					
+				}
+			});
+
+		});
+
+		function LoadQuantity(){
+
+			$.get('/currentquantity' , function(data){
+				$("#cq").html(data);
+				
+			});
+		}
+
+	
+
+	</script>
+</body>
+</html>
