@@ -16,7 +16,8 @@ from .models import CurrentUserHolding, Share, SharePrice, UserShareQuantity
 
 # Create your views here.
 def dashboard(request):
-    return render(request, 'SellBuy/dashboard.html')
+    shares = Share.objects.all()
+    return render(request, 'SellBuy/dashboard.html', { 'shares' : shares })
 
 def dashboard_data(request):
     user = request.user
@@ -32,6 +33,7 @@ def dashboard_data(request):
         temp_data['current_price'] = obj.share.current_price
         temp_data['previous_price'] = obj.share.previous_price
         temp_data['percentage_share_change'] = percentage_share_change
+        temp_data['quantity'] = obj.quantity
 
         if current_price >= previous_price:
             temp_data['share_change'] = "increase"
@@ -67,7 +69,7 @@ def current_money(request):
 @csrf_exempt
 def transaction(request):
     if request.method == "POST":
-        share = request.POST.get('dropdown')
+        share_id = request.POST.get('dropdown')
         quantity = int(request.POST.get('quantity'))
         button = request.POST.get('button')
         username = request.user.username
@@ -77,7 +79,7 @@ def transaction(request):
         if not response['success']:
             return JsonResponse(response, safe=False)
         current_money = current_user_holding.current_holding
-        share_obj = get_or_none(Share, name=share)
+        share_obj = get_or_none(Share, id=share_id)
         response = assert_not_found(share_obj, "Share not found")
         if not response['success']:
             return JsonResponse(response, safe=False)

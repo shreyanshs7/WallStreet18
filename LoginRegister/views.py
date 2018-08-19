@@ -89,7 +89,6 @@ register_request_methods = {
 def register(request):
     function = register_request_methods[request.method]
     response = function(request)
-    print(response)
     if response['type'] == 'register_get':
         return render(request, 'LoginRegister/register.html')
     if response['type'] == 'register_post':

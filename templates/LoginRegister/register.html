@@ -1,157 +1,161 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Fjalla+One|Oswald" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Arsenal" rel="stylesheet">
-    <title>Register</title>
-    <script src="/static/js/validation.js"></script>
-  <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/register.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-    </head>
-    <body style="font-family: 'Raleway', sans-serif;">
-      <script>
-        function register() {
-          var name = $("#name").val();
-          var username = $("#username").val();
-          var email = $("#email").val();
-          var college = $("#college").val();
-          var branch = $("#branch").val();
-          var password = $("#password").val();
-          var contact = $("#contact").val();
-          
-          var data = {
-            "username" : username,
-            "name" : name,
-            "email" : email,
-            "college" : college,
-            "branch" : branch,
-            "password" : password,
-            "contact" : contact
-          }
-          $.ajax({
-				type : "POST",
-				url : "/auth/register/",
-				data : data,
-				success : function(data) {
-					if(data.success == true) {
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Fjalla+One|Oswald" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Arsenal" rel="stylesheet">
+	<title>WallStreet 18 | Register</title>
+	<script src="/static/js/validation.js"></script>
+	<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/css/register.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</head>
+
+<body style="font-family: 'Raleway', sans-serif;">
+	<script>
+		function register() {
+			var name = $("#name").val();
+			var username = $("#username").val();
+			var email = $("#email").val();
+			var college = $("#college").val();
+			var branch = $("#branch").val();
+			var password = $("#password").val();
+			var contact = $("#contact").val();
+
+			var data = {
+				"username": username,
+				"name": name,
+				"email": email,
+				"college": college,
+				"branch": branch,
+				"password": password,
+				"contact": contact
+			}
+			$.ajax({
+				type: "POST",
+				url: "/auth/register/",
+				data: data,
+				success: function (data) {
+					if (data.success == true) {
 						window.location.href = '/auth/login/';
 					}
 					else {
 						//your code to for showing error message in HTML page
 					}
 				},
-				error : function() {
+				error: function () {
 					console.log("ERROR");
 				}
-          });
+			});
 
-        }
-      </script>
-      <div class="card mx-auto container">
-      <div class="display-4 text-center mt-5 mb-3"> Wallstreet'18 </div>
-      <p class="text-center"> Register a new account </p>
-    <!--<form onsubmit="return !!(Func(this) & usertest() & numtest())">-->
-      <!--<div class="form-group mt-4 mr-2 ml-2">-->
-      <!--<label for="Username">Username</label>-->
-      <div class="form-group mt-4 mr-2 ml-2">
-          <div class="input-group">
-              <span class="input-group-addon">
-                  <i class="fa fa-id-badge mr-1 mb-0"></i>
-              </span>
-          <input type="text" class="form-control" id="name" placeholder="Name" required>
-        
-      </div>
-        <div id="errorname"></div>
-       </div>
-      <div class="form-group mt-4 mr-2 ml-2">
-        <div class="input-group">
-            <span class="input-group-addon">
-                <i class="fa fa-user mr-1 mb-0"></i>
-            </span>
-        <input type="text" class="form-control" id="username" placeholder="Username" onkeyup="usertest()" required>
-      
-    </div>
-      <div id="erroru"></div>
-     </div>
-     <div class="form-group mr-2 ml-2 mt-4">
-     <!--<label for="Email">Email address</label>-->
-     <div class="input-group">
-        <span class="input-group-addon">
-            <i class="fa fa-envelope-o mr-1 mb-0"></i>
-          </span>
-     <input type="email" class="form-control" id="email" placeholder="Email" required>
-     
-   </div>
-    </div>
+		}
+	</script>
+	<div class="card mx-auto container">
+		<div class="display-4 text-center mt-5 mb-3"> Wallstreet'18 </div>
+		<p class="text-center"> Register a new account </p>
+		<!--<form onsubmit="return !!(Func(this) & usertest() & numtest())">-->
+		<!--<div class="form-group mt-4 mr-2 ml-2">-->
+		<!--<label for="Username">Username</label>-->
+		<div class="form-group mt-4 mr-2 ml-2">
+			<div class="input-group">
+				<span class="input-group-addon">
+					<i class="fa fa-id-badge mr-1 mb-0"></i>
+				</span>
+				<input type="text" class="form-control" id="name" placeholder="Name" required>
 
-<div class="form-group mr-2 ml-2 mt-4">
-<!--<label for="college">College </label>-->
-<div class="input-group">
-    <span class="input-group-addon">
-        <i class="fa fa-university mr-1 mb-0"></i>
-      </span>
-<input type="text" class="form-control" id="college" placeholder="College" required>
+			</div>
+			<div id="errorname"></div>
+		</div>
+		<div class="form-group mt-4 mr-2 ml-2">
+			<div class="input-group">
+				<span class="input-group-addon">
+					<i class="fa fa-user mr-1 mb-0"></i>
+				</span>
+				<input type="text" class="form-control" id="username" placeholder="Username" onkeyup="usertest()" required>
 
-</div>
-</div>
+			</div>
+			<div id="erroru"></div>
+		</div>
+		<div class="form-group mr-2 ml-2 mt-4">
+			<!--<label for="Email">Email address</label>-->
+			<div class="input-group">
+				<span class="input-group-addon">
+					<i class="fa fa-envelope-o mr-1 mb-0"></i>
+				</span>
+				<input type="email" class="form-control" id="email" placeholder="Email" required>
 
-<div class="form-group mr-2 ml-2">
-    <select class="form-control mt-4 mr-2" id="branch" placeholder="">
-  <option selected> Select your branch </option>
-  <option> CSE </option>
-  <option> IT </option>
-  <option> ECE </option>
-    <option> Civil </option>
-      <option> Mechanical </option>
-        <option> Metallurgy </option>
-          <option> Biotech </option>
-          <option> Bio-med </option>
-        </select>
-</div>
+			</div>
+		</div>
 
-<div class="form-group mr-2 ml-2 mt-4">
-<!--<label for="password">Password</label>-->
-<div class="input-group">
-    <span class="input-group-addon">
-        <i class="fa fa-lock mr-1 mb-0"></i>
-      </span>
-<input type="password" class="form-control has-feedback" id="password" placeholder="Enter password"  required>
+		<div class="form-group mr-2 ml-2 mt-4">
+			<!--<label for="college">College </label>-->
+			<div class="input-group">
+				<span class="input-group-addon">
+					<i class="fa fa-university mr-1 mb-0"></i>
+				</span>
+				<input type="text" class="form-control" id="college" placeholder="College" required>
 
-</div>
-<div id="errorp"> </div>
-</div>
-<div class="form-group mr-2 ml-2 mt-4">
-<!--<label for="password">Password(again)</label>-->
-<div class="input-group">
-    <span xlass="input-group-addon">
-    <i class="fa fa-arrow-circle-right mr-1 mb-0"></i>
-    </span>
-<input type="password" class="form-control" id="passworda" placeholder="Confirm password" required>
-</div>
-</div>
-<div class="form-group mr-2 ml-2 mt-4">
-<!--<label for="contact">Contact</label>-->
-<div class="input-group">
-    <span class="input-group-addon">
-        <i class="fa fa-phone mr-1 mb-0"></i>
-    </span>
-<input type="tel" class="form-control" id="contact" min="10" max="10" name="contact" placeholder="Contact number" onkeyup="numtest()" required>
+			</div>
+		</div>
 
-</div>
-<div id="errorc"></div>
-</div>
-<button class="btn btn-info btn-sm text-center" id="register" onclick="register()"> SIGN UP </button>
-<p class="text-center mt-2" id="signin"> Already have an account? <a href="/auth/login/"> Sign in </a></p>
-<br>
+		<div class="form-group mr-2 ml-2">
+			<select class="form-control mt-4 mr-2" id="branch" placeholder="">
+				<option selected> Select your branch </option>
+				<option> CSE </option>
+				<option> IT </option>
+				<option> ECE </option>
+				<option> Civil </option>
+				<option> Mechanical </option>
+				<option> Metallurgy </option>
+				<option> Biotech </option>
+				<option> Bio-med </option>
+			</select>
+		</div>
 
-</div>
-  </body>
+		<div class="form-group mr-2 ml-2 mt-4">
+			<!--<label for="password">Password</label>-->
+			<div class="input-group">
+				<span class="input-group-addon">
+					<i class="fa fa-lock mr-1 mb-0"></i>
+				</span>
+				<input type="password" class="form-control has-feedback" id="password" placeholder="Enter password" required>
+
+			</div>
+			<div id="errorp"> </div>
+		</div>
+		<div class="form-group mr-2 ml-2 mt-4">
+			<!--<label for="password">Password(again)</label>-->
+			<div class="input-group">
+				<span xlass="input-group-addon">
+					<i class="fa fa-arrow-circle-right mr-1 mb-0"></i>
+				</span>
+				<input type="password" class="form-control" id="passworda" placeholder="Confirm password" required>
+			</div>
+		</div>
+		<div class="form-group mr-2 ml-2 mt-4">
+			<!--<label for="contact">Contact</label>-->
+			<div class="input-group">
+				<span class="input-group-addon">
+					<i class="fa fa-phone mr-1 mb-0"></i>
+				</span>
+				<input type="tel" class="form-control" id="contact" min="10" max="10" name="contact" placeholder="Contact number" onkeyup="numtest()"
+				 required>
+
+			</div>
+			<div id="errorc"></div>
+		</div>
+		<button class="btn btn-info btn-sm text-center" id="register" onclick="register()"> SIGN UP </button>
+		<p class="text-center mt-2" id="signin"> Already have an account? <a href="/auth/login/"> Sign in </a></p>
+		<br>
+
+	</div>
+</body>
+
 </html>
