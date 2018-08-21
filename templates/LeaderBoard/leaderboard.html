@@ -1,1 +1,66 @@
-leaderboard
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WallStreet '17 | Leaderboard</title>
+	<link type="text/css" rel="stylesheet" href="/static/css/materialize.min.css"  media="screen,projection"/>
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+	
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="icon" href="/static/images/wallstreet-logo.png">
+	<script src="/static/js/jquery-3.2.1.js"></script>
+</head>
+<body class="teal" style="font-family: 'Raleway';">
+<script src="/static/js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="/static/js/materialize.min.js"></script>
+
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		Leaderboard();
+		
+	});
+</script>
+<h3 class="center lime-text">Leaderboard</h3>
+<hr width="370">
+<br><br>
+<div class="container">
+ <div class="card">
+  <div class="card-content">		
+	<table>
+		<thead> 
+			<th class="center" style="font-size: 30px;">User</th>
+			<th class="center" style="font-size: 30px;">Money</th>
+		</thead>
+		<tbody id="leaderboard">
+				
+		</tbody>
+	</table>
+  </div>	
+ </div>	
+</div>
+
+
+<script type="text/javascript">
+	
+	function Leaderboard(){
+		$.get('/leaderboard/update/',function(data){
+            var leaderboardData = "";
+            for(var i = 0 ; i < data.data.length ; i++){
+                leaderboardData+="<tr><td class='center blue-text text-darken-4'><b>"+(data.data[i].name)+"</b></td><td class='center'><b>"+(data.data[i].holding)+"</b></td></tr>";
+            }
+			$("#leaderboard").html(leaderboardData);	
+		});
+	}
+
+	setInterval(function(){
+		$.get('/leaderboard/update/',function(data){
+			var leaderboardData = "";
+            for(var i = 0 ; i < data.data.length ; i++){
+                leaderboardData+="<tr><td class='center blue-text text-darken-4'><b>"+(data.data[i].name)+"</b></td><td class='center'>"+(data.data[i].holding)+"</b></td></tr>";
+            }
+			$("#leaderboard").html(leaderboardData);	
+		});
+	} ,15000);
+</script>
+</body>
+</html>

@@ -82,14 +82,14 @@
 							<span style="margin-left: 55px; "><b>Share :</b></span>
 							{% csrf_token %}
 							<div class="container">
-								<select name="dropdown" id="dropdown">
+								<select id="dropdown">
 									{% for obj in shares %}
 									<option value="{{ obj.id }}">{{ obj.name }}</option>
 									{% endfor %}
 								</select>
 								<br>
 								<span><b>Quantity :</b></span>
-								<input type="number" name="quantity" id="quantity" placeholder="0">
+								<input type="number" id="quantity" placeholder="0">
 								<br><br>
 								<div class="center"><button class="btn waves-effect waves-light  light-green accent-4 black-text" type="submit" name="buy"
 									 id="buy" value="BUY"><b>BUY</b></button>

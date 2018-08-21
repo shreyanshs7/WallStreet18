@@ -7,21 +7,22 @@ from django.http import JsonResponse
 
 # Create your views here.
 def leaderboard(request):
-    leaderboard = CurrentUserHolding.objects.order_by('current_holding').reverse()
-    return render(request,'LeaderBoard/leaderboard.html', {'leaderboard' : leaderboard})
+    return render(request, 'LeaderBoard/leaderboard.html')
 
 def leaderboard_update(request):
     leaderboard = CurrentUserHolding.objects.order_by('current_holding').reverse()
+    leaderboard_list = []
     for obj in leaderboard:
-        user_object = UserDetail.objects.get(username=obj.username)
-        leaderboard_date = {
+        user_object = UserDetail.objects.get(username=obj.user.username)
+        leaderboard_data = {
             "name" : user_object.name,
             "username" : user_object.username,
-            "holding" : obj.current_holding
+            "holding" : round(obj.current_holding, 3)
         }
+        leaderboard_list.append(leaderboard_data)
 
     data = {
         "success" : True,
-        "data" : leaderboard_date
+        "data" : leaderboard_list
     }    
     return JsonResponse(data, safe=False)
