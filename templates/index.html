@@ -26,13 +26,21 @@
 			<a href="#" class="brand-logo" style="margin-left: 30px;"><b class="lime-text">WallStreet '17</b></a>
 			<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 70px;">
+				{% if user.is_authenticated %}
+				<li><a href="/sellbuy/dashboard/">DASHBOARD</a></li>
+				{% else %}
 				<li><a href="/auth/login/">LOGIN</a></li>
 				<li><a href="/auth/register/">REGISTER</a></li>
+				{% endif %}
 				<li><a href="#">DEVELOPERS</a></li>
 			</ul>
 			<ul class="side-nav" id="mobile-demo">
+				{% if user.is_authenticated %}
+				<li><a href="/sellbuy/dashboard/">DASHBOARD</a></li>
+				{% else %}
 				<li><a href="/auth/login/">LOGIN</a></li>
 				<li><a href="/auth/register/">REGISTER</a></li>
+				{% endif %}
 				<li><a href="#">DEVELOPERS</a></li>
 			</ul>
 		</div>

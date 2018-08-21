@@ -5,7 +5,7 @@ import random
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
@@ -16,9 +16,11 @@ from .models import CurrentUserHolding, Share, SharePrice, UserShareQuantity
 
 # Create your views here.
 def dashboard(request):
-    shares = Share.objects.all()
-    return render(request, 'SellBuy/dashboard.html', { 'shares' : shares })
-
+    if request.user.is_authenticated():
+        shares = Share.objects.all()
+        return render(request, 'SellBuy/dashboard.html', { 'shares' : shares })
+    else:
+        return HttpResponseRedirect('/auth/login/')
 def dashboard_data(request):
     user = request.user
     user_share_quantity = UserShareQuantity.objects.filter(user=user)
@@ -62,7 +64,7 @@ def current_money(request):
     response = {
         "success": True,
         "message": "Your current money is %s" % (str(money)),
-        "money": money
+        "money": round(money,3)
     }
     return JsonResponse(response, safe=False)
 
@@ -107,10 +109,14 @@ def transaction(request):
                     response['message'] = ("Bought %s shares of %s")%(str(quantity), share_name)
                     return JsonResponse(response, safe=False)
                 response['success'] = False
-                response['message'] = ("Current Holding is less only %s share can be bought") % (str(int(current_money / share_price)))
+                response['message'] = ("Money is less only %s share can be bought") % (str(int(current_money / share_price)))
                 return JsonResponse(response, safe=False)
             if button == "SELL":
-                if previous_quantity <= quantity:
+                if previous_quantity == int(0):
+                    response['success'] = False
+                    response['message'] = ("You haven't bought shares of %s") % (share_name)
+                    return JsonResponse(response, safe=False)
+                elif previous_quantity >= quantity:
                     user_share_quantity.quantity = previous_quantity - quantity
                     user_share_quantity.save()
 
@@ -118,7 +124,7 @@ def transaction(request):
                     current_user_holding.save()
 
                     response['success'] = True
-                    response['message'] = ("Sold %s shares of %s") % (str(quantity), share_name)
+                    response['message'] = ("Sold %s share of %s") % (str(quantity), share_name)
                     return JsonResponse(response, safe=False)
                 response['success'] = False
                 response['message'] = ("You have only %s share of %s to sell") % (str(previous_quantity), share_name)

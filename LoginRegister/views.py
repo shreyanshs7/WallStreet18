@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
@@ -135,3 +135,8 @@ def user_login(request):
         else:
             return JsonResponse(response, safe=False)    
     return JsonResponse(response, safe=False)
+
+
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/')
