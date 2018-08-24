@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'^data/', dashboard_data),
     url(r'^money/', current_money),
     url(r'^transaction/', transaction),
-    url(r'^graph/', share_graph)
+    url(r'^graph/(\d+)', share_graph)
 ]

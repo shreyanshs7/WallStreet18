@@ -5,15 +5,15 @@ import random
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from Helpers.utils import assert_found, get_or_none, assert_not_found
 
 from .models import CurrentUserHolding, Share, SharePrice, UserShareQuantity
-
-
+from plotly.offline import plot
+from plotly.graph_objs import Bar , Scatter
 # Create your views here.
 def dashboard(request):
     if request.user.is_authenticated():
@@ -21,6 +21,7 @@ def dashboard(request):
         return render(request, 'SellBuy/dashboard.html', { 'shares' : shares })
     else:
         return HttpResponseRedirect('/auth/login/')
+
 def dashboard_data(request):
     user = request.user
     user_share_quantity = UserShareQuantity.objects.filter(user=user)
@@ -29,8 +30,9 @@ def dashboard_data(request):
         current_price = obj.share.current_price
         previous_price = obj.share.previous_price
 
-        percentage_share_change = round((previous_price / current_price), 2)
+        percentage_share_change = round(( (current_price - previous_price) / current_price)*100, 2)
         temp_data = {}
+        temp_data['share_id'] = obj.share.id
         temp_data['share'] = obj.share.name
         temp_data['current_price'] = obj.share.current_price
         temp_data['previous_price'] = obj.share.previous_price
@@ -137,9 +139,9 @@ def transaction(request):
         return JsonResponse({"error": "Method not allowed"}, safe=False)
 
 @csrf_exempt
-def share_graph(request):
-    share_id = request.POST.get('id')
-    share = get_or_none(Share, id=share_id)
+def share_graph(request,id):
+    # share_id = request.POST.get('id')
+    share = get_or_none(Share, id=id)
     response = assert_not_found(share, "Share not found")
     if not response['success']:
         return JsonResponse(response, safe=False)
@@ -148,7 +150,7 @@ def share_graph(request):
     y = []
     for obj in share_price:
         time = obj.time
-        time = time.strftime("%H:%M")
+        time = time.strftime("%H:%M:%S")
         x.append(time)
         y.append(obj.price)
     data = {
@@ -156,5 +158,5 @@ def share_graph(request):
         "share_price" : y,
         "share_time" : x
     }
-    return JsonResponse(data, safe=False)    
+    return HttpResponse(plot([Scatter(x=x, y=y)], auto_open=False, output_type='div'))    
         

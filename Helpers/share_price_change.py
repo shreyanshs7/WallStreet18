@@ -1,5 +1,5 @@
 import os, sys, schedule, time, random
-sys.path.append('/home/shreyansh/DjangoProjects/WallStreet18/')
+sys.path.append('/home/shreyansh/Projects/DjangoProjects/WallStreet18/')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "WallStreet18.settings")
 import django
 django.setup()
@@ -12,6 +12,10 @@ def share_price_update():
         # Changing each share price
         old_share_price = share.current_price
         new_share_price = (old_share_price) * (random.uniform(0.7, 1.3))
+        if new_share_price < 1000:
+            new_share_price = (new_share_price)*(random.uniform(1.1, 1.3))
+        elif new_share_price > random.randint(50000,60000):
+            new_share_price = (new_share_price)*(random.uniform(0.7, 0.9))
         new_share_price = round(new_share_price, 2)
         new_share = SharePrice.objects.create(share=share, price=new_share_price)
         new_share.save()

@@ -5,14 +5,14 @@
 	{% load static %}
 	<title>WallStreet '17</title>
 	<link type="text/css" rel="stylesheet" href="/static/css/materialize.min.css" media="screen,projection" />
-	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="icon" href="/static/images/wallstreet-logo.png">
 	<script src="/static/js/jquery-3.2.1.js"></script>
 </head>
 
-<body class="teal darken-3">
+<body class="teal darken-3" style="font-family : 'Roboto'">
 	<script src="/static/js/jquery-3.2.1.js"></script>
 	<script type="text/javascript" src="/static/js/materialize.min.js"></script>
 	<script language="javascript" type="text/javascript">
@@ -65,11 +65,14 @@
 	</nav>
 	<br>
 
-	<div style="width: 1200px; margin-left: 70px;">
-		<div class="card">
-			<div class="card-content">
+	<div class="container">
+		<!-- <div class="card"> -->
+			<!-- <div class="card-content"> -->
 				<div class="row">
+					
 					<div class="col s4">
+							<div class="card">
+									<div class="card-content">
 						<h5 class="" style="margin-left: 68px;">Welcome <b class="blue-text text-darken-3	">{{ request.user }}</b></h5>
 
 						<br><br>
@@ -102,12 +105,17 @@
 
 
 
-					</div>
+					</div></div></div>
+					
 					<div class="col s8">
+							<div class="card">
+									<div class="card-content">
 					<table class="centered">
 							<thead class="center">
 								<th>Share Name</th>
-								<th>Share Price</th>
+								<th>Current Price</th>
+								<th>Previous Price</th>
+								<th>Percentage Change</th>
 								<th>Shares Bought</th>
 							</thead>
 							<tbody id="share_table">
@@ -115,18 +123,19 @@
 							</tbody>
 						</table>
 						<br><br>
-						<button class="btn waves-effect waves-light blue-grey black-text " style="margin-left: 290px;" onclick="LoadPrice()"><b>Refresh
+						<button class="btn waves-effect waves-light blue-grey white-text " style="margin-left: 290px;" onclick="LoadPrice()"><b>Refresh
 								Price
 							</b></button>
 					</div>
 				</div>
+				</div>
 
 
-			</div>
+			<!-- </div> -->
 
 
-		</div>
-	</div>
+		<!-- </div> -->
+	</div></div>
 
 
 
@@ -144,7 +153,8 @@
 				console.log(data);
 				var tableHTML = "";
 				for (var i = 0; i < data.data.length; i++) {
-					tableHTML += "<tr><td>" + data.data[i].share + "</td><td>" + data.data[i].current_price + "</td><td>" + data.data[i].quantity + "</td></tr>";
+					tableHTML+='<tr><td><a href='+'\'/sellbuy/graph/'+(data.data[i].share_id)+'\' onclick=\"return popitup(\'/sellbuy/graph/'+(data.data[i].share_id)+'\')\">'+(data.data[i].share)+'</a>'+'</td><td>'+(data.data[i].current_price)+'</td><td>'+(data.data[i].previous_price)+'</td><td>'+(data.data[i].percentage_share_change)+'</td><td>'+(data.data[i].quantity)+'</td></tr>';
+					// tableHTML += "<tr><td>"+ data.data[i].share + "</a></td><td>" + data.data[i].current_price + "</td><td>" + data.data[i].quantity + "</td></tr>";
 				}
 				$("#share_table").html(tableHTML);
 

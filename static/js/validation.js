@@ -23,8 +23,8 @@ function Func(){
         document.getElementById('erroru').innerHTML="";
     }*/
     var regex= /^[A-Za-z0-9_]{3,10}$/;
-    var usr=document.getElementById('Username');
-    var usre=document.getElementById('Username').value;
+    var usr=document.getElementById('username');
+    var usre=document.getElementById('username').value;
     if(!regex.test(usre)){
       //usr.style.backgroundColor="#F08080";
       document.getElementById('erroru').innerHTML="The username should not be less than 3 characters, can contain letters, numbers and underscores";
