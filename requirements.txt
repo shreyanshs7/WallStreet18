@@ -46,7 +46,6 @@ pbr==4.2.0
 plotly==2.2.3
 pycodestyle==2.4.0
 pycrypto==2.6.1
-pygobject==3.26.1
 PyJWT==1.5.3
 pylint==1.9.3
 python-dateutil==2.6.1
