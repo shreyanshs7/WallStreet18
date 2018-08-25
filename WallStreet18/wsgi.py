@@ -1,6 +1,6 @@
 """
 WSGI config for WallStreet18 project.
-
+application
 It exposes the WSGI callable as a module-level variable named ``application``.
 
 For more information on this file, see

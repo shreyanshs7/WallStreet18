@@ -99,6 +99,10 @@ def register(request):
 def login_get(request):
     response = {}
     response['type'] = 'login_get'
+    if request.user.is_authenticated():
+        response['user_logged_in'] = True
+    else:
+        response['user_logged_in'] = False
     return response
 
 def login_post(request):
@@ -128,7 +132,10 @@ def user_login(request):
     function = login_request_methods[request.method]
     response = function(request)
     if response['type'] == 'login_get':
-        return render(request , 'LoginRegister/login.html')
+        if response['user_logged_in'] == True:
+            return render(request , 'SellBuy/dashboard.html')
+        else:
+            return render(request , 'LoginRegister/login.html')
     elif response['type'] == 'login_post':
         if response['success']:
             return JsonResponse(response, safe=False)
