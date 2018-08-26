@@ -1,4 +1,5 @@
-function Func(){
+
+  function Func(){
     var x= document.getElementById('password');
     var y= document.getElementById('passworda');
     if(x.value!=y.value){
@@ -44,12 +45,13 @@ function Func(){
   function numtest(){
     var len=document.getElementById('contact');
     var isnum = /^\d+$/.test(len.value);
-    if(len.value.length!=10 && !isnum){
+    if(len.value.length!=10 || !isnum ){
     //  len.style.backgroundColor="#F08080";
       document.getElementById('errorc').innerHTML="Enter a valid phone number";
-      return false
+      return false;
     }
-    if(len.value.length==10 && isnum){
+    /*if(len.value.length==10 && isnum ){*/
+    else {
       len.style.backgroundColor="white";
       document.getElementById('errorc').innerHTML="";
       return true;

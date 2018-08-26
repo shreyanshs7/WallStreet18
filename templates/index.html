@@ -7,7 +7,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Gothic+A1:600" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
-	<title>WallStreet 18 | Home</title>
+	<title>WallStreet 18</title>
 	<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/static/css/homepage.css">
@@ -24,44 +24,49 @@
 
 		<img src="/static/images/Bizman.png" alt="BusinessMan" id="Bman">
 
-		<nav class="navbar navbar-expand-sm">
+		<nav class="navbar navbar-expand-sm navbar-dark">
 			<!-- Links -->
-			<ul class="navbar-nav">
-				&nbsp; &nbsp;
-				{% if user.is_authenticated %}
-				<li class="nav-item">
-					<a class="nav-link" href="/sellbuy/dashboard/">Dashboard</a>
-				</li> &nbsp; &nbsp;
-				<li class="nav-item">
-					<a class="nav-link" href="/auth/logout/">Logout</a>
-				</li>
-				{% else %}
-				<li class="nav-item">
-					<a class="nav-link" href="/auth/login/">Login</a>
-				</li> &nbsp; &nbsp;
-				<li class="nav-item">
-					<a class="nav-link" href="/auth/register/">Register</a>
-				</li>
-				{% endif %}
-			</ul>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+				<span class="navbar-toggler-icon" style=""></span>
+			</button>
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+				<ul class="navbar-nav">
+					&nbsp; &nbsp; 
+					{% if user.is_authenticated %}
+					<li class="nav-item">
+						<a class="nav-link" href="/sellbuy/dashboard/">Dashboard</a>
+					</li> &nbsp; &nbsp;
+					<li class="nav-item">
+						<a class="nav-link" href="/auth/logout/">Logout</a>
+					</li>
+					{% else %}
+					<li class="nav-item">
+						<a class="nav-link" href="/auth/login/">Login</a>
+					</li> &nbsp; &nbsp;
+					<li class="nav-item">
+						<a class="nav-link" href="/auth/register/">Register</a>
+					</li>
+					{% endif %}
+				</ul>
+			</div>
 		</nav>
 
 		<div id="logo">
 			<img src="/static/images/wslogo.png" alt="Logo not available!" id="logows">
-			<div class=" display-4 mt-3"> WALL STREET </div>
+			<div class=" display-4 mt-3" id="head"> WALL STREET </div>
 		</div>
 
 
 		<div class="flex-container" id="a">
 			<div class="text-center">
-				<p style="font-weight:bold;font-size:30px"> Already a user? </p>
-				<form action="/auth/login/">
+				<p style="font-weight:bold;" id="text1"> Already a user? </p>
+				<form action="../Login/Login.html">
 					<input type="submit" class="btn btn-lg text-center" id="btn" value="Login">
 				</form>
 			</div>
 			<div class="text-center">
-				<p style="font-weight:bold;font-size:30px"> Get registered </p>
-				<form action="/auth/register/">
+				<p style="font-weight:bold;" id="text1"> Get registered </p>
+				<form action="../Register/registration.html">
 					<input type="submit" class="btn btn-lg text-center" id="btn" value="Register">
 				</form>
 			</div>
@@ -77,7 +82,7 @@
 		<div class="slides slide" id="one">
 			<div id="content">
 				<div id="heading">
-					<div class="display-4 text-center"> INTRODUCTION </div>
+					<div class="display-4 text-center" id="heada"> INTRODUCTION </div>
 				</div>
 				<div class="flex-container" id="b">
 					<div id="number">
@@ -95,7 +100,7 @@
 		<div class="slides slide">
 			<div id="content">
 				<div id="heading">
-					<div class="display-4 text-center"> SCOPE OF WORK </div>
+					<div class="display-4 text-center" id="heada"> SCOPE OF WORK </div>
 				</div>
 				<div class="flex-container" id="b">
 					<div id="number">
@@ -113,7 +118,7 @@
 		<div class="slides slide">
 			<div id="content">
 				<div id="heading">
-					<div class="display-4 text-center"> NEED </div>
+					<div class="display-4 text-center" id="heada"> NEED </div>
 				</div>
 				<div class="flex-container" id="b">
 					<div id="number">
@@ -128,7 +133,7 @@
 		<div class="slides slide">
 			<div id="content">
 				<div id="heading">
-					<div class="display-4 text-center"> GOALS </div>
+					<div class="display-4 text-center" id="heada"> GOALS </div>
 				</div>
 				<div class="flex-container" id="b">
 					<div id="number">
@@ -136,7 +141,7 @@
 					</div>
 					<div id="text"> <br> To help students become aware of the market strategies. Develop self confidence among students
 						among students while making big decisions. Start the habit of being aware of every development possibility among students.
-						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -159,5 +164,3 @@
 	</div>
 
 </body>
-
-</html>
