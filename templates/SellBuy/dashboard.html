@@ -1,232 +1,210 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" dir="ltr">
 
 <head>
-	{% load static %}
-	<title>WallStreet 18 | Dashboard</title>
-	<link type="text/css" rel="stylesheet" href="/static/css/materialize.min.css" media="screen,projection" />
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link rel="icon" href="/static/images/wallstreet-logo.png">
-	<script src="/static/js/jquery-3.2.1.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Gothic+A1:600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <title>WallStreet 18 | Dashboard</title>
+    <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="/static/css/materialize.min.css"> -->
+    <!-- <script src="dashboard.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/static/js/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.basic.toast.js"></script>
 </head>
 
-<body class="teal darken-3" style="font-family : 'Roboto'">
-	<script src="/static/js/jquery-3.2.1.js"></script>
-	<script type="text/javascript" src="/static/js/materialize.min.js"></script>
-	<script language="javascript" type="text/javascript">
+<body>
 
-		$(document).ready(function () {
-			$('select').material_select();
-			$(".button-collapse").sideNav();
-			CurrentHolding();
-			LoadPrice();
-		});
+    <script language="javascript" type="text/javascript">
 
-		function popitup(url) {
-			var leftPosition, topPosition;
+        $(document).ready(function () {
+            CurrentHolding();
+            LoadPrice();
+        });
 
-			leftPosition = (window.screen.width / 2) - ((800 / 2) + 10);
+        function popitup(url) {
+            var leftPosition, topPosition;
 
-			topPosition = (window.screen.height / 2) - ((600 / 2) + 50);
+            leftPosition = (window.screen.width / 2) - ((800 / 2) + 10);
 
-			newwindow = window.open(url, 'name', "status=no,height=600,width=800,resizable=yes,left="
-				+ leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY="
-				+ topPosition + ",toolbar=no,menubar=no,scrollbars=no,directories=no");
+            topPosition = (window.screen.height / 2) - ((600 / 2) + 50);
 
-			if (window.focus) { newwindow.focus() }
-			return false;
-		}
+            newwindow = window.open(url, 'name', "status=no,height=600,width=800,resizable=yes,left="
+                + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY="
+                + topPosition + ",toolbar=no,menubar=no,scrollbars=no,directories=no");
+
+            if (window.focus) { newwindow.focus() }
+            return false;
+        }
 
 
-	</script>
+    </script>
 
-	<nav>
-		<div class="nav-wrapper teal darken-3 ">
+    <nav class="navbar navbar-expand-sm navbar-light">
+        <!-- Lincomks -->
+        <a class="navbar-brand" style="color:#ff8f00;" id="wallstreet" href="/"><img src="/static/images/wslogo.png" alt="Logo not available!"
+                id="logows">WallStreet</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon" style=""></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link ml-2" style="color:#1E1D54" href="/auth/logout/">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ml-2" style="color:#1E1D54" href="/leaderboard/get/">Leaderboard</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--Content-->
+    <div id="shade">
+        <div class="flex-container">
+            <div class="left">
+                <div class="box1">
+                    <h1 class="ml-3"><B> Welcome<br> {{ name }}</B></h1>
+                </div>
+                <div class="box2">
+                    <h3 id="caption"> Money </h3>
+                    <h3 id="money"></h3>
+                </div>
+                <div class="box3">
+                    <h3 id="caption"> Stocks </h3>
+                    <div class="form-group">
+                        <label for="sel1" style="font-size:22px;color:#1E1D54;font-weight:bold;padding:3%;">Shares :</label>
+                        <select class="form-control" id="sharename">
+                            {% for obj in shares %}
+                            <option value="{{ obj.id }}">{{ obj.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sel1" style="font-size:22px;color:#1E1D54;font-weight:bold;padding-left:3%;">Quantity
+                            :
+                        </label>
+                        <input type="number" class="form-control" id="sharequantity" placeholder="0">
+                    </div>
+                    <div class="flex-container text-center" id="buttons">
+                        <div> <input type="submit" class="btn btn-sm btn-danger text-center mr-2 ml-5 mb-2" id="buy" value="BUY"></div>
+                        <div> <input type="submit" class="btn btn-sm btn-danger text-center ml-2 mb-2" id="sell" value="SELL"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <table class="table table-striped table-sm">
+                    <thead class="text-center">
+                        <tr>
+                            <th scope="col">Share Name</th>
+                            <th scope="col">Current Price</th>
+                            <th scope="col">Previous Price</th>
+                            <th scope="col">Percentage change</th>
+                            <th scope="col">Shares bought</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center" id="share_table">
+            
+                    </tbody>
+                </table>
+                <!-- <canvas id="c" height="400" width="800"></canvas> -->
 
-			<span class="brand-logo lime-text" style="margin-left: 40px; font-family: 'Raleway', sans-serif;"><b>WallStreet '17</b></span>
-			<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            </div>
+        </div>
+    </div>
+    <script>
+        setInterval(function () {
+            LoadPrice();
+        }, 10000);
 
+        function LoadPrice() {
 
-			<ul id="nav-mobile" class="right hide-on-med-and-down" style="margin-right: 70px;">
-				<!-- <li><a onclick="return popitup('/usergraph/{{request.user}}')">HOLDINGS GRAPH</a></li> -->
-				<li><a href="/">HOME</a></li>
-				<li><a href="/auth/logout/">LOGOUT</a></li>
-				<li><a href="/leaderboard/get/">LEADERBOARD</a></li>
-			</ul>
-			<ul class="side-nav" id="mobile-demo">
-				<!-- <li><a onclick="return popitup('/sellbuy/{{request.user}}')">HOLDINGS GRAPH</a></li> -->
-				<li><a href="/">HOME</a></li>
-				<li><a href="/auth/logout/">LOGOUT</a></li>
-				<li><a href="/leaderboard/get/">LEADERBOARD</a></li>
-			</ul>
-		</div>
-	</nav>
-	<br>
+            $.get('/sellbuy/data/', function (data) {
+                console.log(data);
+                var tableHTML = "";
+                for (var i = 0; i < data.data.length; i++) {
+                    tableHTML += '<tr><td><a href=' + '\'/sellbuy/graph/' + (data.data[i].share_id) + '\' onclick=\"return popitup(\'/sellbuy/graph/' + (data.data[i].share_id) + '\')\">' + (data.data[i].share) + '</a>' + '</td><td>' + (data.data[i].current_price) + '</td><td>' + (data.data[i].previous_price) + '</td><td>' + (data.data[i].percentage_share_change) + '</td><td>' + (data.data[i].quantity) + '</td></tr>';
+                    // tableHTML += "<tr><td>"+ data.data[i].share + "</a></td><td>" + data.data[i].current_price + "</td><td>" + data.data[i].quantity + "</td></tr>";
+                }
+                $("#share_table").html(tableHTML);
 
-	<div class="container">
-		<!-- <div class="card"> -->
-			<!-- <div class="card-content"> -->
-				<div class="row">
-					
-					<div class="col s4">
-							<div class="card">
-									<div class="card-content">
-						<h5 class="" style="margin-left: 68px;">Welcome <b class="blue-text text-darken-3	">{{ request.user }}</b></h5>
+            });
+        }
 
-						<br><br>
-						<h6 class="" style=" font-size: 30px; margin-left: 40px;"><b>Money - </b><span id="ch" class="green-text"></span></h6>
-						<br>
-
-						<br><br>
-
-						<form>
-							<span style="margin-left: 55px; "><b>Share :</b></span>
-							{% csrf_token %}
-							<div class="container">
-								<select id="dropdown">
-									{% for obj in shares %}
-									<option value="{{ obj.id }}">{{ obj.name }}</option>
-									{% endfor %}
-								</select>
-								<br>
-								<span><b>Quantity :</b></span>
-								<input type="number" id="quantity" placeholder="0">
-								<br><br>
-								<div class="center"><button class="btn waves-effect waves-light  light-green accent-4 black-text" type="submit" name="buy"
-									 id="buy" value="BUY"><b>BUY</b></button>
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<button class="btn waves-effect waves-light red accent-4 black-text" type="submit" name="sell" id="sell" value="SELL"><b>SELL</b></button></div>
-							</div>
-
-
-						</form>
-
-
-
-					</div></div></div>
-					
-					<div class="col s8">
-							<div class="card">
-									<div class="card-content">
-					<table class="centered">
-							<thead class="center">
-								<th>Share Name</th>
-								<th>Current Price</th>
-								<th>Previous Price</th>
-								<th>Percentage Change</th>
-								<th>Shares Bought</th>
-							</thead>
-							<tbody id="share_table">
-
-							</tbody>
-						</table>
-						<br><br>
-						<button class="btn waves-effect waves-light blue-grey white-text " style="margin-left: 290px;" onclick="LoadPrice()"><b>Refresh
-								Price
-							</b></button>
-					</div>
-				</div>
-				</div>
-
-
-			<!-- </div> -->
-
-
-		<!-- </div> -->
-	</div></div>
-
-
-
+        function CurrentHolding() {
+            $.get('/sellbuy/money/', function (data) {
+                $("#money").html("$ " + data.money);
+            });
+        }
 
 
-	<script>
+        $("#buy").click(function (e) {
 
-		setInterval(function () {
-			LoadPrice();
-		}, 10000);
+            e.preventDefault();
+            var dropdown = $("#sharename").val();
+            var quantity = $("#sharequantity").val();
+            var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+            var button = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: '/sellbuy/transaction/',
+                data: {
+                    dropdown: dropdown,
+                    quantity: quantity,
+                    button: button,
+                    csrfmiddlewaretoken: csrfmiddlewaretoken
 
-		function LoadPrice() {
+                },
+                success: function (data) {
+                    CurrentHolding();
+                    LoadPrice();
+                    $.Toast(data.message , {
+                        'duration' : 4000,
+                        'position' : 'bottom',
+                        'z-depth' : 99999
+                    });
+                }
+            });
 
-			$.get('/sellbuy/data/', function (data) {
-				console.log(data);
-				var tableHTML = "";
-				for (var i = 0; i < data.data.length; i++) {
-					tableHTML+='<tr><td><a href='+'\'/sellbuy/graph/'+(data.data[i].share_id)+'\' onclick=\"return popitup(\'/sellbuy/graph/'+(data.data[i].share_id)+'\')\">'+(data.data[i].share)+'</a>'+'</td><td>'+(data.data[i].current_price)+'</td><td>'+(data.data[i].previous_price)+'</td><td>'+(data.data[i].percentage_share_change)+'</td><td>'+(data.data[i].quantity)+'</td></tr>';
-					// tableHTML += "<tr><td>"+ data.data[i].share + "</a></td><td>" + data.data[i].current_price + "</td><td>" + data.data[i].quantity + "</td></tr>";
-				}
-				$("#share_table").html(tableHTML);
+        });
 
-			});
-		}
+        $("#sell").click(function (e) {
 
-		function CurrentHolding() {
-			$.get('/sellbuy/money/', function (data) {
-				$("#ch").html(data.money);
-			});
-		}
+            e.preventDefault();
 
+            var dropdown = $("#sharename").val();
+            var quantity = $("#sharequantity").val();
+            var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
+            var button = $(this).val();
 
-		$("#buy").click(function (e) {
+            $.ajax({
+                type: 'POST',
+                url: '/sellbuy/transaction/',
+                data: {
+                    dropdown: dropdown,
+                    quantity: quantity,
+                    button: button,
+                    csrfmiddlewaretoken: csrfmiddlewaretoken
 
-			e.preventDefault();
+                },
+                success: function (data) {
+                    CurrentHolding();
+                    LoadPrice();
+                    $.Toast(data.message);
+                }
+            });
 
-			var dropdown = $("#dropdown").val();
-			var quantity = $("#quantity").val();
-			var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
-			var button = $(this).val();
+        });
 
-			$.ajax({
-				type: 'POST',
-				url: '/sellbuy/transaction/',
-				data: {
-					dropdown: dropdown,
-					quantity: quantity,
-					button: button,
-					csrfmiddlewaretoken: csrfmiddlewaretoken
-
-				},
-				success: function (data) {
-					CurrentHolding();
-					LoadPrice();
-					Materialize.toast(data.message, 4000, 'rounded');
-
-				}
-			});
-
-		});
-
-		$("#sell").click(function (e) {
-
-			e.preventDefault();
-
-			var dropdown = $("#dropdown").val();
-			var quantity = $("#quantity").val();
-			var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
-			var button = $(this).val();
-
-			$.ajax({
-				type: 'POST',
-				url: '/sellbuy/transaction/',
-				data: {
-					dropdown: dropdown,
-					quantity: quantity,
-					button: button,
-					csrfmiddlewaretoken: csrfmiddlewaretoken
-
-				},
-				success: function (data) {
-					CurrentHolding();
-					LoadPrice();
-					Materialize.toast(data.message, 4000, 'rounded');
-
-				}
-			});
-
-		});
-
-	</script>
+    </script>
 </body>
 
 </html>

@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'LoginRegister',
     'LeaderBoard',
-    'SellBuy'
+    'SellBuy',
+    'background_task'
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,5 @@ STATICFILES_DIRS = [
 ]
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+BACKGROUND_TASK_RUN_ASYNC = True

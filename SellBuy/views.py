@@ -10,7 +10,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from Helpers.utils import assert_found, get_or_none, assert_not_found
-
+from LoginRegister.models import UserDetail
 from .models import CurrentUserHolding, Share, SharePrice, UserShareQuantity
 from plotly.offline import plot
 from plotly.graph_objs import Bar , Scatter
@@ -18,7 +18,8 @@ from plotly.graph_objs import Bar , Scatter
 def dashboard(request):
     if request.user.is_authenticated():
         shares = Share.objects.all()
-        return render(request, 'SellBuy/dashboard.html', { 'shares' : shares })
+        name = get_or_none(UserDetail, username=request.user.username)
+        return render(request, 'SellBuy/dashboard2.html', { 'shares' : shares , 'name' : name })
     else:
         return HttpResponseRedirect('/auth/login/')
 

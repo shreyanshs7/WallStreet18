@@ -100,6 +100,9 @@ def login_get(request):
     response = {}
     response['type'] = 'login_get'
     if request.user.is_authenticated():
+        # user = request.user.username
+        # user_detail = UserDetail.objects.get(username=user)
+        # response['name'] = user_detail.name
         response['user_logged_in'] = True
     else:
         response['user_logged_in'] = False
@@ -133,7 +136,7 @@ def user_login(request):
     response = function(request)
     if response['type'] == 'login_get':
         if response['user_logged_in'] == True:
-            return render(request , 'SellBuy/dashboard.html')
+            return HttpResponseRedirect('/sellbuy/dashboard/')
         else:
             return render(request , 'LoginRegister/login.html')
     elif response['type'] == 'login_post':
