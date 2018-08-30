@@ -70,7 +70,7 @@ def register_post(request):
 
     response = {
         'success' : True,
-        'message' : "User Registered",
+        'message' : "User registered",
         'type' : 'register_post',
         "user" : {
             "id" : user.id,
@@ -100,9 +100,6 @@ def login_get(request):
     response = {}
     response['type'] = 'login_get'
     if request.user.is_authenticated():
-        # user = request.user.username
-        # user_detail = UserDetail.objects.get(username=user)
-        # response['name'] = user_detail.name
         response['user_logged_in'] = True
     else:
         response['user_logged_in'] = False
