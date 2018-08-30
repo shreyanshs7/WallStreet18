@@ -147,17 +147,32 @@ def share_graph(request,id):
     if not response['success']:
         return JsonResponse(response, safe=False)
     share_price = SharePrice.objects.filter(share=share)
-    x = []
-    y = []
+    # x = []
+    # y = []
+    # for obj in share_price:
+    #     time = obj.time
+    #     time = time.strftime("%H:%M:%S")
+    #     x.append(time)
+    #     y.append(obj.price)
+    # data = {
+    #     "success" : True,
+    #     "share_price" : y,
+    #     "share_time" : x
+    # }
+    # return HttpResponse(plot([Scatter(x=x, y=y)], auto_open=False, output_type='div'))
+    points = []
     for obj in share_price:
         time = obj.time
         time = time.strftime("%H:%M:%S")
-        x.append(time)
-        y.append(obj.price)
-    data = {
-        "success" : True,
-        "share_price" : y,
-        "share_time" : x
-    }
-    return HttpResponse(plot([Scatter(x=x, y=y)], auto_open=False, output_type='div'))    
+        point = {
+            "x" : obj.price,
+            "y" : time
+        }
+        points.append(point)
+    
+    data = {}
+    data['success'] = True
+    data['data'] = points
+
+    return JsonResponse(data, safe=False)
         

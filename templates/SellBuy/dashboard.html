@@ -54,7 +54,7 @@
         <a class="navbar-brand" style="color:#ff8f00;" id="wallstreet" href="/"><img src="/static/images/wslogo.png" alt="Logo not available!"
                 id="logows">WallStreet</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon" style=""></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
@@ -132,7 +132,7 @@
                 var tableHTML = "";
                 for (var i = 0; i < data.data.length; i++) {
                     tableHTML += '<tr><td><a href=' + '\'/sellbuy/graph/' + (data.data[i].share_id) + '\' onclick=\"return popitup(\'/sellbuy/graph/' + (data.data[i].share_id) + '\')\">' + (data.data[i].share) + '</a>' + '</td><td>' + (data.data[i].current_price) + '</td><td>' + (data.data[i].previous_price) + '</td><td>' + (data.data[i].percentage_share_change) + '</td><td>' + (data.data[i].quantity) + '</td></tr>';
-                    // tableHTML += "<tr><td>"+ data.data[i].share + "</a></td><td>" + data.data[i].current_price + "</td><td>" + data.data[i].quantity + "</td></tr>";
+
                 }
                 $("#share_table").html(tableHTML);
 
