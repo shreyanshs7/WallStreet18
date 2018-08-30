@@ -19,7 +19,7 @@ def dashboard(request):
     if request.user.is_authenticated():
         shares = Share.objects.all()
         name = get_or_none(UserDetail, username=request.user.username)
-        return render(request, 'SellBuy/dashboard2.html', { 'shares' : shares , 'name' : name })
+        return render(request, 'SellBuy/dashboard.html', { 'shares' : shares , 'name' : name })
     else:
         return HttpResponseRedirect('/auth/login/')
 
