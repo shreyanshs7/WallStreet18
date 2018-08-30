@@ -39,8 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'LoginRegister',
     'LeaderBoard',
-    'SellBuy',
-    'background_task'
+    'SellBuy'
 ]
 
 MIDDLEWARE = [
