@@ -109,7 +109,7 @@ def transaction(request):
                     current_user_holding.save()
 
                     response['success'] = True
-                    response['message'] = ("Bought %s shares of %s")%(str(quantity), share_name)
+                    response['message'] = ("Bought %s share of %s")%(str(quantity), share_name)
                     return JsonResponse(response, safe=False)
                 response['success'] = False
                 response['message'] = ("Money is less only %s share can be bought") % (str(int(current_money / share_price)))
@@ -141,38 +141,39 @@ def transaction(request):
 
 @csrf_exempt
 def share_graph(request,id):
-    # share_id = request.POST.get('id')
     share = get_or_none(Share, id=id)
     response = assert_not_found(share, "Share not found")
     if not response['success']:
         return JsonResponse(response, safe=False)
     share_price = SharePrice.objects.filter(share=share)
-    # x = []
-    # y = []
-    # for obj in share_price:
-    #     time = obj.time
-    #     time = time.strftime("%H:%M:%S")
-    #     x.append(time)
-    #     y.append(obj.price)
-    # data = {
-    #     "success" : True,
-    #     "share_price" : y,
-    #     "share_time" : x
-    # }
-    # return HttpResponse(plot([Scatter(x=x, y=y)], auto_open=False, output_type='div'))
-    points = []
+    x = []
+    y = []
     for obj in share_price:
         time = obj.time
         time = time.strftime("%H:%M:%S")
-        point = {
-            "x" : obj.price,
-            "y" : time
-        }
-        points.append(point)
+        x.append(time)
+        y.append(obj.price)
+    data = {
+        "success" : True,
+        "share_name" : share.name,
+        "share_price" : y,
+        "share_time" : x
+    }
+    return JsonResponse(data,safe=False)
+    # return HttpResponse(plot([Scatter(x=x, y=y)], auto_open=False, output_type='div'))
+    # points = []
+    # for obj in share_price:
+    #     time = obj.time
+    #     time = time.strftime("%H:%M:%S")
+    #     point = {
+    #         "x" : obj.price,
+    #         "y" : time
+    #     }
+    #     points.append(point)
     
-    data = {}
-    data['success'] = True
-    data['data'] = points
+    # data = {}
+    # data['success'] = True
+    # data['data'] = points
 
-    return JsonResponse(data, safe=False)
+    # return JsonResponse(data, safe=False)
         

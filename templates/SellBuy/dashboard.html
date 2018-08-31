@@ -14,9 +14,8 @@
     <link rel="stylesheet" href="/static/css/font-awesome.min.css">
     <!-- <link rel="stylesheet" href="/static/css/materialize.min.css"> -->
     <!-- <script src="dashboard.js"></script> -->
-    <script src="/static/js/chart.min.js"></script>
+    <script src="/static/js/plotly.min.js"></script>
     <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/chart.js"></script>
     <script src="/static/js/popper.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/jquery.basic.toast.js"></script>
@@ -76,7 +75,7 @@
                 </div>
                 <div class="box2">
                     <h3 id="caption"> Money </h3>
-                   	<h3 id="money"></h3>
+                    <h3 id="money"></h3>
                 </div>
                 <div class="box3">
                     <h3 id="caption"> Stocks </h3>
@@ -112,10 +111,10 @@
                         </tr>
                     </thead>
                     <tbody class="text-center" id="share_table">
-            
+
                     </tbody>
                 </table>
-                <!-- <canvas id="c" height="400" width="800"></canvas> -->
+                <div id="graph" height="400" width="800" style="padding-left: 3%"></div>
 
             </div>
         </div>
@@ -125,13 +124,32 @@
             LoadPrice();
         }, 10000);
 
+        function Graph(id) {
+            $.get('/sellbuy/graph/' + id + '', function (data) {
+                console.log(data);
+                var trace = {
+                    x: data.share_time,
+                    y: data.share_price,
+                    type: 'Scatter'
+                };
+                var graphData = [trace];
+
+                var layout = {
+                    title: data.share_name
+                };
+
+                Plotly.newPlot('graph', graphData, layout);
+            });
+        }
+
         function LoadPrice() {
 
             $.get('/sellbuy/data/', function (data) {
                 console.log(data);
                 var tableHTML = "";
                 for (var i = 0; i < data.data.length; i++) {
-                    tableHTML += '<tr><td><a href=' + '\'/sellbuy/graph/' + (data.data[i].share_id) + '\' onclick=\"return popitup(\'/sellbuy/graph/' + (data.data[i].share_id) + '\')\">' + (data.data[i].share) + '</a>' + '</td><td>' + (data.data[i].current_price) + '</td><td>' + (data.data[i].previous_price) + '</td><td>' + (data.data[i].percentage_share_change) + '</td><td>' + (data.data[i].quantity) + '</td></tr>';
+                    // tableHTML += '<tr><td><a href=' + '\'/sellbuy/graph/' + (data.data[i].share_id) + '\' onclick=\"return popitup(\'/sellbuy/graph/' + (data.data[i].share_id) + '\')\">' + (data.data[i].share) + '</a>' + '</td><td>' + (data.data[i].current_price) + '</td><td>' + (data.data[i].previous_price) + '</td><td>' + (data.data[i].percentage_share_change) + '</td><td>' + (data.data[i].quantity) + '</td></tr>';
+                    tableHTML += '<tr><td onclick=\"Graph(' + (data.data[i].share_id) + ')\"><a href="#">' + (data.data[i].share) + '</a>' + '</td><td>' + (data.data[i].current_price) + '</td><td>' + (data.data[i].previous_price) + '</td><td>' + (data.data[i].percentage_share_change) + '</td><td>' + (data.data[i].quantity) + '</td></tr>';
 
                 }
                 $("#share_table").html(tableHTML);
@@ -141,7 +159,7 @@
 
         function CurrentHolding() {
             $.get('/sellbuy/money/', function (data) {
-                $("#money").html("&#8377; "+data.money);
+                $("#money").html("&#8377; " + data.money);
             });
         }
 
@@ -166,10 +184,10 @@
                 success: function (data) {
                     CurrentHolding();
                     LoadPrice();
-                    $.Toast(data.message , {
-                        'duration' : 4000,
-                        'position' : 'bottom',
-                        'z-depth' : 99999
+                    $.Toast(data.message, {
+                        'duration': 4000,
+                        'position': 'bottom',
+                        'z-depth': 99999
                     });
                 }
             });
