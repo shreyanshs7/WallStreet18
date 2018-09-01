@@ -7,7 +7,7 @@ django.setup()
 from SellBuy.models import Share, SharePrice
 import random, time
 
-shares = ['Star Labs','Lannister Corp','Stark Industries','Pied Piper', 'Warner Bros.', 'Marvel Studios']
+shares = ['Star Labs','Wayne Enterprises','Stark Industries','Pied Piper', 'Warner Bros.', 'Marvel Studios']
 
 def generate_share_price():
     time.sleep(1)

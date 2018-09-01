@@ -1,0 +1,45 @@
+body {
+    /*font-family: 'Oswald', sans-serif;*/
+    /*font-family: 'Fjalla One', sans-serif;*/
+    background-color: #001f3f;
+    font-family: 'Arsenal', sans-serif;
+     overflow-x: hidden;
+     height: 100%;
+     color: white;
+    }
+    #wallstreet {
+      color: #ff8f00;
+      font-size: 32px;
+    }
+    p {
+      color:white;
+      font-size: 25px;
+    }
+    .table {
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 17px;
+    }
+    .display-4 {
+      color:#ff8f00;
+    }
+    tbody {
+      color: white;
+    }
+    #rank {
+      color: #ff8f00;
+    }
+    @media screen and (max-width:768px){
+      .display-4 {
+        font-size: 36px;
+      }
+      p {
+        font-size: 17px;
+      }
+      .table {
+        width: 70%;
+        font-size: 15px;
+      }
+    
+    }
