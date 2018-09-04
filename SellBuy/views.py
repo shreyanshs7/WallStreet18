@@ -170,10 +170,9 @@ def share_graph(request,id):
     #         "y" : time
     #     }
     #     points.append(point)
-    
+
     # data = {}
     # data['success'] = True
     # data['data'] = points
 
     # return JsonResponse(data, safe=False)
-        
