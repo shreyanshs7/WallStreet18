@@ -4,15 +4,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Gothic+A1:600" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Gothic+A1:600" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"> -->
     <link rel="icon" href="/static/images/logo.png">
     <title>Dashboard | WallStreet '18</title>
     <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/dashboard.css">
     <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/toastify.min.css">
     <!-- <link rel="stylesheet" href="/static/css/materialize.min.css"> -->
     <!-- <script src="dashboard.js"></script> -->
     <script src="/static/js/plotly.min.js"></script>
@@ -20,7 +21,6 @@
     <script src="/static/js/popper.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/jquery.basic.toast.js"></script>
-    <script src="/static/js/loader.js"></script>
 </head>
 
 <body>
@@ -64,7 +64,7 @@
                     <a class="nav-link ml-2" style="color:#1E1D54" href="/auth/logout/">Logout</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link ml-2" style="color:#1E1D54" href="/leaderboard/get/">Leaderboard</a>
+                    <a class="nav-link ml-2" style="color:#1E1D54" href="/leaderboard/get/" target="_blank">Leaderboard</a>
                 </li>
             </ul>
         </div>
@@ -152,7 +152,7 @@
                 var tableHTML = "";
                 for (var i = 0; i < data.data.length; i++) {
                     // tableHTML += '<tr><td><a href=' + '\'/sellbuy/graph/' + (data.data[i].share_id) + '\' onclick=\"return popitup(\'/sellbuy/graph/' + (data.data[i].share_id) + '\')\">' + (data.data[i].share) + '</a>' + '</td><td>' + (data.data[i].current_price) + '</td><td>' + (data.data[i].previous_price) + '</td><td>' + (data.data[i].percentage_share_change) + '</td><td>' + (data.data[i].quantity) + '</td></tr>';
-                    tableHTML += '<tr><td onclick=\"Graph(' + (data.data[i].share_id) + ')\"><a href="#">' + (data.data[i].share) + '</a>' + '</td><td>' + (data.data[i].current_price) + '</td><td>' + (data.data[i].previous_price) + '</td><td>' + (data.data[i].percentage_share_change) + '</td><td>' + (data.data[i].quantity) + '</td></tr>';
+                    tableHTML += '<tr><td onclick=\"Graph(' + (data.data[i].share_id) + ')\"><a href="#">' + (data.data[i].share) + '</a>' + '</td><td> &#8377; ' + (data.data[i].current_price) + '</td><td> &#8377; ' + (data.data[i].previous_price) + '</td><td>' + (data.data[i].percentage_share_change) + ' %</td><td>' + (data.data[i].quantity) + '</td></tr>';
 
                 }
                 $("#share_table").html(tableHTML);
@@ -219,7 +219,11 @@
                 success: function (data) {
                     CurrentHolding();
                     LoadPrice();
-                    $.Toast(data.message);
+                    $.Toast(data.message, {
+                        'duration': 4000,
+                        'position': 'bottom',
+                        'z-depth': 99999
+                    });
                 }
             });
 

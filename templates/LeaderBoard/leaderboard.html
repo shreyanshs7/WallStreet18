@@ -4,9 +4,9 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://fonts.googleapis.com/css?family=Gothic+A1:600" rel="stylesheet">
+	<!-- <link href="https://fonts.googleapis.com/css?family=Gothic+A1:600" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet"> -->
 	<link rel="icon" href="/static/images/logo.png">
 	<title>Leaderboard</title>
 	<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
@@ -36,6 +36,7 @@
 	<table class="table table-striped table-sm text-center" id="mytable">
 		<thead style="color:white;">
 			<tr>
+				<th><h3><b> Rank </b></h3></th>
 				<th><h3><b> Name </b></h3></th>
 				<th><h3><b> Money </b></h3></th>
 			</tr>
@@ -47,15 +48,16 @@
 	<script>
 		function Leaderboard() {
 			$.get('/leaderboard/update/', function (data) {
+				console.log(data);
 				var leaderboardData = "";
 				for (var i = 0; i < data.data.length; i++) {
-					leaderboardData += "<tr><td class='center' style='color:white;'>" + (data.data[i].name) + "</td><td class='center' style='color:white;'>" + (data.data[i].holding) + "</td></tr>";
+					leaderboardData += "<tr><td class='center' style='color:white;'>" + (data.data[i].index) + "<td class='center' style='color:white;'>" + (data.data[i].username) + "</td><td class='center' style='color:white;'> &#8377; " + (data.data[i].holding) + "</td></tr>";
 				}
 				$("#leaderboard").html(leaderboardData);
 			});
 		}
 
-		setInterval(Leaderboard(), 4000);
+		setInterval(Leaderboard, 4000);
 
 	</script>
 </body>

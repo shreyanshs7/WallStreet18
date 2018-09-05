@@ -24,14 +24,14 @@ class SharePrice(models.Model):
 class UserHolding(models.Model):
 	user = models.ForeignKey(User)
 	time = models.TimeField(auto_now=True)
-	holding = models.FloatField(default=10000.00)
+	holding = models.FloatField(default=25000.00)
 
 	def __str__(self):
 		return self.user.username
 
 class CurrentUserHolding(models.Model):
 	user = models.ForeignKey(User)
-	current_holding = models.FloatField(default=10000.00)
+	current_holding = models.FloatField(default=25000.00)
 
 	def __str__(self):
 		return self.user.username

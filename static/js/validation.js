@@ -23,7 +23,7 @@
         len.style.backgroundColor= "white";
         document.getElementById('erroru').innerHTML="";
     }*/
-    var regex= /^[A-Za-z0-9_]{3,10}$/;
+    var regex= /^[A-Za-z0-9_]{3,}$/;
     var usr=document.getElementById('username');
     var usre=document.getElementById('username').value;
     if(!regex.test(usre)){
