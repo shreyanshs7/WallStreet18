@@ -172,9 +172,18 @@
             e.preventDefault();
             var dropdown = $("#sharename").val();
             var quantity = $("#sharequantity").val();
+            console.log(quantity);
             var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
             var button = $(this).val();
-            $.ajax({
+            if( quantity == "" ) {
+                $.Toast("Enter a valid quantity", {
+                        'duration': 4000,
+                        'position': 'bottom',
+                        'z-depth': 99999
+                    });
+            }
+            else {
+                $.ajax({
                 type: 'POST',
                 url: '/sellbuy/transaction/',
                 data: {
@@ -187,13 +196,15 @@
                 success: function (data) {
                     CurrentHolding();
                     LoadPrice();
-                    $.Toast(data.message, {
+                    $.Toast("Enter a valid quantity", {
                         'duration': 4000,
                         'position': 'bottom',
                         'z-depth': 99999
                     });
                 }
             });
+            }
+            
 
         });
 
@@ -205,8 +216,16 @@
             var quantity = $("#sharequantity").val();
             var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
             var button = $(this).val();
-
-            $.ajax({
+            
+            if( quantity == "") {
+                $.Toast(data.message, {
+                        'duration': 4000,
+                        'position': 'bottom',
+                        'z-depth': 99999
+                    });
+            }
+            else {
+                $.ajax({
                 type: 'POST',
                 url: '/sellbuy/transaction/',
                 data: {
@@ -226,6 +245,8 @@
                     });
                 }
             });
+            }
+            
 
         });
 
