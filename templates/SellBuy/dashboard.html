@@ -50,7 +50,7 @@
 
     </script>
     <div id="bg"></div>
-	<div id="loader"></div>
+    <div id="loader"></div>
     <nav class="navbar navbar-expand-sm navbar-light">
         <!-- Lincomks -->
         <a class="navbar-brand" style="color:#ff8f00;" id="wallstreet" href="/"><img src="/static/images/wslogo.png" alt="Logo not available!"
@@ -168,22 +168,16 @@
 
 
         $("#buy").click(function (e) {
-
+            $("#sell").attr("disabled", true);
+            $("#buy").attr("disabled", true);
             e.preventDefault();
             var dropdown = $("#sharename").val();
             var quantity = $("#sharequantity").val();
             console.log(quantity);
             var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
             var button = $(this).val();
-            if( quantity == "" ) {
-                $.Toast("Enter a valid quantity", {
-                        'duration': 4000,
-                        'position': 'bottom',
-                        'z-depth': 99999
-                    });
-            }
-            else {
-                $.ajax({
+
+            $.ajax({
                 type: 'POST',
                 url: '/sellbuy/transaction/',
                 data: {
@@ -201,31 +195,27 @@
                         'position': 'bottom',
                         'z-depth': 99999
                     });
+                    $("#sell").attr("disabled", false);
+                    $("#buy").attr("disabled", false);
                 }
             });
-            }
-            
+
+
 
         });
 
         $("#sell").click(function (e) {
 
             e.preventDefault();
+            $("#sell").attr("disabled", true);
+            $("#buy").attr("disabled", true);
 
             var dropdown = $("#sharename").val();
             var quantity = $("#sharequantity").val();
             var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
             var button = $(this).val();
-            
-            if( quantity == "") {
-                $.Toast(data.message, {
-                        'duration': 4000,
-                        'position': 'bottom',
-                        'z-depth': 99999
-                    });
-            }
-            else {
-                $.ajax({
+
+            $.ajax({
                 type: 'POST',
                 url: '/sellbuy/transaction/',
                 data: {
@@ -238,6 +228,9 @@
                 success: function (data) {
                     CurrentHolding();
                     LoadPrice();
+                    $.Toast(data.message);
+                    $("#sell").attr("disabled", false);
+                    $("#buy").attr("disabled", false);
                     $.Toast(data.message, {
                         'duration': 4000,
                         'position': 'bottom',
@@ -245,8 +238,7 @@
                     });
                 }
             });
-            }
-            
+
 
         });
 

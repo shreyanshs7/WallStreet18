@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from Developers import views
 from . import index
 
 urlpatterns = [
@@ -22,5 +23,6 @@ urlpatterns = [
     url(r'^$', index),
     url(r'^auth/', include('LoginRegister.urls')),
     url(r'^leaderboard/', include('LeaderBoard.urls')),
-    url(r'^sellbuy/', include('SellBuy.urls'))
+    url(r'^sellbuy/', include('SellBuy.urls')),
+    url(r'^developers/',views.developers, name="developers"),
 ]

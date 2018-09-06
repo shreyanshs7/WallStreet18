@@ -79,7 +79,7 @@ def register_post(request):
     }
 
     return response
-   
+
 register_request_methods = {
     "POST" : register_post,
     "GET" : register_get
@@ -93,7 +93,7 @@ def register(request):
         return render(request, 'LoginRegister/register.html')
     if response['type'] == 'register_post':
         if response['success']:
-            return JsonResponse(response, safe=False)  
+            return JsonResponse(response, safe=False)
     return JsonResponse(response, safe=False)
 
 def login_get(request):
@@ -140,10 +140,13 @@ def user_login(request):
         if response['success']:
             return JsonResponse(response, safe=False)
         else:
-            return JsonResponse(response, safe=False)    
+            return JsonResponse(response, safe=False)
     return JsonResponse(response, safe=False)
 
 
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+#def developers(request):
+#    return render(request,'LoginRegister/developers.html')

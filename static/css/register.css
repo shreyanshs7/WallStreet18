@@ -12,6 +12,11 @@ html {
 .card {
   display: none;
 }
+#logows {
+  height: 230px;
+  width: 240px;
+  margin-left: 23%;
+  margin-top:11%;}
 #bg {
   background-color: black;
   height:100vh;
@@ -179,6 +184,9 @@ select.form-group:focus {
   #loader {
     height: 150px;
     width: 150px;
+  }
+  #logows {
+    display: none;
   }
 }
 
