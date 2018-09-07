@@ -30,6 +30,7 @@
         $(document).ready(function () {
             CurrentHolding();
             LoadPrice();
+            getdata();
         });
 
         function popitup(url) {
@@ -50,7 +51,7 @@
 
     </script>
     <div id="bg"></div>
-	<div id="loader"></div>
+    <div id="loader"></div>
     <nav class="navbar navbar-expand-sm navbar-light">
         <!-- Lincomks -->
         <a class="navbar-brand" style="color:#ff8f00;" id="wallstreet" href="/"><img src="/static/images/wslogo.png" alt="Logo not available!"
@@ -117,7 +118,9 @@
 
                     </tbody>
                 </table>
-                <div id="graph" height="400" width="800" style="padding-left: 3%"></div>
+                <div id="graph" height="250" width="800">
+                  <h4 style="color:gray;padding-top:150px;padding-left:150px;position:fixed">Click on the shares in the table to display the respective graphs!</h4>
+              </div>
 
             </div>
         </div>
@@ -126,31 +129,48 @@
         setInterval(function () {
             LoadPrice();
         }, 10000);
-
+       
+     
         function Graph(id) {
             $.get('/sellbuy/graph/' + id + '', function (data) {
                 console.log(data);
                 var trace = {
                     x: data.share_time,
                     y: data.share_price,
-                    type: 'Scatter'
+                    type: 'Scatter',
+                    marker: {
+                     color: '#ff8f00',
+                     size: 10,
+                     line: {
+                      color: 'black',
+                      width: 1
+                  }
+                },
                 };
                 var graphData = [trace];
 
                 var layout = {
-                    title: data.share_name
+                    title: data.share_name,
+
                 };
 
                 Plotly.newPlot('graph', graphData, layout);
+
+
+                
+
+
             });
         }
-
+        
         function LoadPrice() {
 
             $.get('/sellbuy/data/', function (data) {
                 console.log(data);
+                
                 var tableHTML = "";
                 for (var i = 0; i < data.data.length; i++) {
+                   
                     // tableHTML += '<tr><td><a href=' + '\'/sellbuy/graph/' + (data.data[i].share_id) + '\' onclick=\"return popitup(\'/sellbuy/graph/' + (data.data[i].share_id) + '\')\">' + (data.data[i].share) + '</a>' + '</td><td>' + (data.data[i].current_price) + '</td><td>' + (data.data[i].previous_price) + '</td><td>' + (data.data[i].percentage_share_change) + '</td><td>' + (data.data[i].quantity) + '</td></tr>';
                     tableHTML += '<tr><td onclick=\"Graph(' + (data.data[i].share_id) + ')\"><a href="#">' + (data.data[i].share) + '</a>' + '</td><td> &#8377; ' + (data.data[i].current_price) + '</td><td> &#8377; ' + (data.data[i].previous_price) + '</td><td>' + (data.data[i].percentage_share_change) + ' %</td><td>' + (data.data[i].quantity) + '</td></tr>';
 
@@ -168,14 +188,15 @@
 
 
         $("#buy").click(function (e) {
-          $("#sell").attr("disabled", true);
-          $("#buy").attr("disabled",true);
+            $("#sell").attr("disabled", true);
+            $("#buy").attr("disabled", true);
             e.preventDefault();
             var dropdown = $("#sharename").val();
             var quantity = $("#sharequantity").val();
             var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
             var button = $(this).val();
-                $.ajax({
+
+            $.ajax({
                 type: 'POST',
                 url: '/sellbuy/transaction/',
                 data: {
@@ -195,9 +216,13 @@
                         'position': 'bottom',
                         'z-depth': 99999
                     });
+                    $("#sell").attr("disabled", false);
+                    $("#buy").attr("disabled", false);
                 }
             });
-            
+
+
+
         });
 
         $("#sell").click(function (e) {
@@ -210,8 +235,8 @@
             var quantity = $("#sharequantity").val();
             var csrfmiddlewaretoken = $("input[name=csrfmiddlewaretoken]").val();
             var button = $(this).val();
-            
-                $.ajax({
+
+            $.ajax({
                 type: 'POST',
                 url: '/sellbuy/transaction/',
                 data: {
@@ -224,6 +249,7 @@
                 success: function (data) {
                     CurrentHolding();
                     LoadPrice();
+                    $.Toast(data.message);
                     $("#sell").attr("disabled", false);
                     $("#buy").attr("disabled", false);
                     $.Toast(data.message, {

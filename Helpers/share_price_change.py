@@ -1,5 +1,6 @@
 import os, sys, schedule, time, random
-sys.path.append('/home/shreyansh/Projects/DjangoProjects/WallStreet18/')
+sys.path.append('/home/pratibha/Desktop/wallstreet18/')
+#sys.path.append('/home/shreyansh/Projects/DjangoProjects/WallStreet18/')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "WallStreet18.settings")
 import django
 django.setup()
@@ -24,7 +25,7 @@ def share_price_update():
         share.save()
     print("Share price changed")
     return True
-    
+
 
 schedule.every(10).seconds.do(share_price_update)
 

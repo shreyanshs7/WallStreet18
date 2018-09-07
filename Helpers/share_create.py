@@ -1,5 +1,6 @@
 import os, sys
-sys.path.append('/home/shreyansh/Projects/DjangoProjects/WallStreet18/')
+sys.path.append('/home/pratibha/Desktop/wallstreet18/')
+# sys.path.append('/home/shreyansh/Projects/DjangoProjects/WallStreet18/')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "WallStreet18.settings")
 import django
 django.setup()
@@ -19,14 +20,13 @@ def generate_share_price():
             previous_price=price
         )
         share_obj.save()
-
         share_price_obj = SharePrice.objects.create(
             share=share_obj,
             price=price
         )
         share_price_obj.save()
-    time.sleep(2)       
-    return True   
+    time.sleep(2)
+    return True
 
 if __name__ == "__main__":
     generate_share_price()

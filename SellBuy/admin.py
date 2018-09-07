@@ -5,7 +5,7 @@ from django.contrib import admin
 
 # Register your models here.
 class ShareAdmin(admin.ModelAdmin):
-    list_display = ['name','current_price']
+    list_display = ['id','name','current_price']
 admin.site.register(Share,ShareAdmin)
 
 class SharePriceAdmin(admin.ModelAdmin):
