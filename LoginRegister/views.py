@@ -89,9 +89,9 @@ register_request_methods = {
 def register(request):
     function = register_request_methods[request.method]
     response = function(request)
-    if response['type'] == 'register_get':
+    if request.method == 'GET':
         return render(request, 'LoginRegister/register.html')
-    if response['type'] == 'register_post':
+    if request.method == 'POST':
         if response['success']:
             return JsonResponse(response, safe=False)
     return JsonResponse(response, safe=False)
@@ -131,12 +131,12 @@ login_request_methods = {
 def user_login(request):
     function = login_request_methods[request.method]
     response = function(request)
-    if response['type'] == 'login_get':
+    if request.method == 'GET':
         if response['user_logged_in'] == True:
             return HttpResponseRedirect('/sellbuy/dashboard/')
         else:
             return render(request , 'LoginRegister/login.html')
-    elif response['type'] == 'login_post':
+    elif request.method == 'POST':
         if response['success']:
             return JsonResponse(response, safe=False)
         else:

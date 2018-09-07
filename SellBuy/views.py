@@ -45,7 +45,7 @@ def dashboard_data(request):
         else:
             temp_data['share_change'] = "decrease"
         data.append(temp_data)
-
+    
     response = {}
     response['success'] = True
     response['data'] = data
