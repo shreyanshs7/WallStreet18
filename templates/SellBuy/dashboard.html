@@ -190,6 +190,11 @@
                     LoadPrice();
                     $("#sell").attr("disabled", false);
                     $("#buy").attr("disabled", false);
+                    $.Toast(data.message, {
+                        'duration': 4000,
+                        'position': 'bottom',
+                        'z-depth': 99999
+                    });
                 }
             });
             
@@ -219,7 +224,6 @@
                 success: function (data) {
                     CurrentHolding();
                     LoadPrice();
-                    $.Toast(data.message);
                     $("#sell").attr("disabled", false);
                     $("#buy").attr("disabled", false);
                     $.Toast(data.message, {
