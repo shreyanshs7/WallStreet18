@@ -12,8 +12,8 @@ from django.views.decorators.csrf import csrf_exempt
 from Helpers.utils import assert_found, get_or_none, assert_not_found
 from LoginRegister.models import UserDetail
 from .models import CurrentUserHolding, Share, SharePrice, UserShareQuantity
-from plotly.offline import plot
-from plotly.graph_objs import Bar , Scatter
+# from plotly.offline import plot
+# from plotly.graph_objs import Bar , Scatter
 # Create your views here.
 def dashboard(request):
     if request.user.is_authenticated():

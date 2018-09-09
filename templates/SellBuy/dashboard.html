@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/dashboard.css">
     <link rel="stylesheet" href="/static/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/static/css/toastify.min.css">
+    <!-- <link rel="stylesheet" href="/static/css/toastify.min.css"> -->
     <!-- <link rel="stylesheet" href="/static/css/materialize.min.css"> -->
     <!-- <script src="dashboard.js"></script> -->
     <script src="/static/js/plotly.min.js"></script>
@@ -246,7 +246,6 @@
                 success: function (data) {
                     CurrentHolding();
                     LoadPrice();
-                    $.Toast(data.message);
                     $("#sell").attr("disabled", false);
                     $("#buy").attr("disabled", false);
                     $.Toast(data.message, {
