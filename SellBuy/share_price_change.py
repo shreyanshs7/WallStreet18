@@ -1,11 +1,11 @@
 import os, sys, schedule, time, random
 # sys.path.append('/home/pratibha/Desktop/wallstreet18/')
-sys.path.append('/home/naveensundar/Desktop/WallStreet18/')
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "WallStreet18.settings")
-import django
-django.setup()
+# sys.path.append('/home/naveensundar/Desktop/WallStreet18/')
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "WallStreet18.settings")
+# import django
+# django.setup()
 
-from SellBuy.models import Share, SharePrice
+from .models import Share, SharePrice
 # from WallStreetML.wallstreet import sharePrice
 
 def share_price_update():
@@ -37,10 +37,7 @@ def share_price_update():
     print("Share price changed")
     return True
 
-
-# schedule.every(5).seconds.do(share_price_update)
-
-if __name__ == '__main__':
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+# if __name__ == '__main__':
+#     while True:
+#         schedule.run_pending()
+#         time.sleep(1)

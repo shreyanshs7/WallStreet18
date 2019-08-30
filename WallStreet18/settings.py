@@ -84,9 +84,9 @@ DATABASES = {
 	#  }
    'default': {
        'ENGINE': 'django.db.backends.mysql',
-       'NAME': 'wallstreet',
-       'USER': 'wallstreet',
-       'PASSWORD': 'wallstreet',
+       'NAME': 'ws19',
+       'USER': 'root',
+       'PASSWORD': 'jervismk2',
        'HOST': 'localhost',
     }
 }
