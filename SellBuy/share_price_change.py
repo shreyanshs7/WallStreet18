@@ -37,6 +37,9 @@ def share_price_update():
     print("Share price changed")
     return True
 
+
+# schedule.every(5).seconds.do(share_price_update)
+
 # if __name__ == '__main__':
 #     while True:
 #         schedule.run_pending()
