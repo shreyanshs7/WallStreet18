@@ -1,5 +1,10 @@
+APScheduler==3.6.1
 Django==1.11
 gunicorn==19.9.0
 mysqlclient==1.4.4
 pytz==2019.2
+schedule==0.6.0
+six==1.12.0
+tzlocal==2.0.0
 whitenoise==3.3.1
+psycopg2==2.8.3
