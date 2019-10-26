@@ -60,13 +60,15 @@ def register_post(request):
     current_user_holding.save()
 
     shares = Share.objects.all()
+    user_share_quantity_list = []
     for share in shares:
-        user_share_quantity = UserShareQuantity.objects.create(
+        user_share_quantity = UserShareQuantity(
             share=share,
             user=user,
             quantity=0
         )
-        user_share_quantity.save()
+        user_share_quantity_list.append(user_share_quantity)
+    UserShareQuantity.objects.bulk_create(user_share_quantity_list)
 
     response = {
         'success' : True,
