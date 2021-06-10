@@ -1,4 +1,4 @@
-Django==1.11
+Django==2.2.24
 gunicorn==19.9.0
 mysqlclient==1.4.4
 pytz==2019.2
